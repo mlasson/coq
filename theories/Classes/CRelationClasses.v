@@ -49,7 +49,7 @@ Section Defs.
   
   (** These are convertible. *)
   Lemma complement_inverse R : complement (flip R) = flip (complement R).
-  Proof. reflexivity. Qed.
+  Proof. reflexivity. Defined.
 
   Class Irreflexive (R : crelation A) :=
     irreflexivity : Reflexive (complement R).
@@ -79,7 +79,7 @@ Section Defs.
 
   (** By definition, a strict order is also asymmetric *)
   Global Instance StrictOrder_Asymmetric `(StrictOrder R) : Asymmetric R.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   (** A partial equivalence crelation is Symmetric and Transitive. *)
   
@@ -111,12 +111,12 @@ Section Defs.
   (** Any symmetric crelation is equal to its inverse. *)
   
   Lemma subrelation_symmetric R `(Symmetric R) : subrelation (flip R) R.
-  Proof. hnf. intros x y H'. red in H'. apply symmetry. assumption. Qed.
+  Proof. hnf. intros x y H'. red in H'. apply symmetry. assumption. Defined.
 
   Section flip.
   
     Lemma flip_Reflexive `{Reflexive R} : Reflexive (flip R).
-    Proof. tauto. Qed.
+    Proof. tauto. Defined.
     
     Program Definition flip_Irreflexive `(Irreflexive R) : Irreflexive (flip R) :=
       irreflexivity (R:=R).
@@ -132,21 +132,21 @@ Section Defs.
 
     Program Definition flip_Antisymmetric `(Antisymmetric eqA R) :
       Antisymmetric eqA (flip R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
     (** Inversing the larger structures *)
 
     Lemma flip_PreOrder `(PreOrder R) : PreOrder (flip R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
     Lemma flip_StrictOrder `(StrictOrder R) : StrictOrder (flip R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
     Lemma flip_PER `(PER R) : PER (flip R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
     Lemma flip_Equivalence `(Equivalence R) : Equivalence (flip R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
   End flip.
 
@@ -154,10 +154,10 @@ Section Defs.
 
     Definition complement_Irreflexive `(Reflexive R)
       : Irreflexive (complement R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
 
     Definition complement_Symmetric `(Symmetric R) : Symmetric (complement R).
-    Proof. firstorder. Qed.
+    Proof. firstorder. Defined.
   End complement.
 
 
@@ -313,10 +313,10 @@ Section Binary.
   Proof. split; red; unfold relation_equivalence, iffT. firstorder. 
     firstorder. 
     intros. specialize (X x0 y0). specialize (X0 x0 y0). firstorder.
-  Qed.
+  Defined.
     
   Global Instance relation_implication_preorder : PreOrder (@subrelation A).
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   (** *** Partial Order.
    A partial order is a preorder which is additionally antisymmetric.
@@ -334,11 +334,11 @@ Section Binary.
   Proof with auto.
     reduce_goal.
     apply H. firstorder.
-  Qed.
+  Defined.
 
   Lemma PartialOrder_inverse `(PartialOrder eqA R) : PartialOrder eqA (flip R).
   Proof. unfold flip; constructor; unfold flip. intros. apply H. apply symmetry. apply X.
-         unfold relation_conjunction. intros [H1 H2]. apply H. constructor; assumption. Qed.
+         unfold relation_conjunction. intros [H1 H2]. apply H. constructor; assumption. Defined.
 End Binary.
 
 Hint Extern 3 (PartialOrder (flip _)) => class_apply PartialOrder_inverse : typeclass_instances.
@@ -352,7 +352,7 @@ Hint Extern 3 (PartialOrder (flip _)) => class_apply PartialOrder_inverse : type
 (* Next Obligation. *)
 (* Proof. *)
 (*   intros x. refine (fun x => x). *)
-(* Qed. *)
+(* Defined. *)
 
 Typeclasses Opaque relation_equivalence.
 

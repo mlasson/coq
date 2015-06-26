@@ -49,13 +49,13 @@ Section Proper.
     proper_proxy : R m m.
 
   Lemma eq_proper_proxy (x : A) : ProperProxy (@eq A) x.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
   
   Lemma reflexive_proper_proxy `(Reflexive A R) (x : A) : ProperProxy R x.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   Lemma proper_proper_proxy x `(Proper R x) : ProperProxy R x.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   (** Respectful morphisms. *)
   
@@ -161,23 +161,23 @@ Section Relations.
 
   Lemma pointwise_pointwise {B} (R : crelation B) :
     relation_equivalence (pointwise_relation R) (@eq A ==> R).
-  Proof. intros. split. simpl_crelation. firstorder. Qed.
+  Proof. intros. split. simpl_crelation. firstorder. Defined.
   
   (** Subcrelations induce a morphism on the identity. *)
   
   Global Instance subrelation_id_proper `(subrelation A RA RA') : Proper (RA ==> RA') id.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   (** The subrelation property goes through products as usual. *)
   
   Lemma subrelation_respectful `(subl : subrelation A RA' RA, subr : subrelation B RB RB') :
     subrelation (RA ==> RB) (RA' ==> RB').
-  Proof. simpl_crelation. Qed.
+  Proof. simpl_crelation. Defined.
 
   (** And of course it is reflexive. *)
   
   Lemma subrelation_refl R : @subrelation A R R.
-  Proof. simpl_crelation. Qed.
+  Proof. simpl_crelation. Defined.
 
   (** [Proper] is itself a covariant morphism for [subrelation].
    We use an unconvertible premise to avoid looping.
@@ -188,21 +188,21 @@ Section Relations.
         `(sub : subrelation A R' R) : Proper R m.
   Proof.
     intros. apply sub. apply mor.
-  Qed.
+  Defined.
 
   Global Instance proper_subrelation_proper_arrow :
     Proper (subrelation ++> eq ==> arrow) (@Proper A).
-  Proof. reduce. subst. firstorder. Qed.
+  Proof. reduce. subst. firstorder. Defined.
 
   Global Instance pointwise_subrelation `(sub : subrelation B R R') :
     subrelation (pointwise_relation R) (pointwise_relation R') | 4.
-  Proof. reduce. unfold pointwise_relation in *. apply sub. auto. Qed.
+  Proof. reduce. unfold pointwise_relation in *. apply sub. auto. Defined.
   
   (** For dependent function types. *)
   Lemma forall_subrelation (P : A -> Type) (R S : forall x : A, crelation (P x)) :
     (forall a, subrelation (R a) (S a)) -> 
     subrelation (forall_relation P R) (forall_relation P S).
-  Proof. reduce. firstorder. Qed.
+  Proof. reduce. firstorder. Defined.
 End Relations.
 Typeclasses Opaque respectful pointwise_relation forall_relation.
 Arguments forall_relation {A P}%type sig%signature _ _.
@@ -232,18 +232,18 @@ Hint Extern 5 (@Proper _ ?H _) => proper_subrelation : typeclass_instances.
 (** Essential subrelation instances for [iff], [impl] and [pointwise_relation]. *)
 
 Instance iff_impl_subrelation : subrelation iff impl | 2.
-Proof. firstorder. Qed.
+Proof. firstorder. Defined.
 
 Instance iff_flip_impl_subrelation : subrelation iff (flip impl) | 2.
-Proof. firstorder. Qed.
+Proof. firstorder. Defined.
 
 (** Essential subrelation instances for [iffT] and [arrow]. *)
 
 Instance iffT_arrow_subrelation : subrelation iffT arrow | 2.
-Proof. firstorder. Qed.
+Proof. firstorder. Defined.
 
 Instance iffT_flip_arrow_subrelation : subrelation iffT (flip arrow) | 2.
-Proof. firstorder. Qed.
+Proof. firstorder. Defined.
 
 (** We use an extern hint to help unification. *)
 
@@ -264,7 +264,7 @@ Section GenericInstances.
     assert(R x0 x0).
     transitivity y0... symmetry...
     transitivity (y x0)...
-  Qed.
+  Defined.
 
   (** The complement of a crelation conserves its proper elements. *)
   
@@ -277,7 +277,7 @@ Section GenericInstances.
     unfold complement.
     pose (mR x y X x0 y0 X0).
     intuition.
-  Qed.
+  Defined.
  
   (** The [flip] too, actually the [flip] instance is a bit more general. *)
 
@@ -288,7 +288,7 @@ Section GenericInstances.
   Next Obligation.
   Proof.
     apply mor ; auto.
-  Qed.
+  Defined.
 
 
   (** Every Transitive crelation gives rise to a binary morphism on [impl],
@@ -302,7 +302,7 @@ Section GenericInstances.
   Proof with auto.
     transitivity x...
     transitivity x0...
-  Qed.
+  Defined.
 
   (** Proper declarations for partial applications. *)
 
@@ -313,7 +313,7 @@ Section GenericInstances.
   Next Obligation.
   Proof with auto.
     transitivity y...
-  Qed.
+  Defined.
 
   Global Program 
   Instance trans_co_impl_type_morphism
@@ -322,7 +322,7 @@ Section GenericInstances.
   Next Obligation.
   Proof with auto.
     transitivity x0...
-  Qed.
+  Defined.
 
   Global Program 
   Instance trans_sym_co_inv_impl_type_morphism
@@ -331,7 +331,7 @@ Section GenericInstances.
   Next Obligation.
   Proof with auto.
     transitivity y... symmetry...
-  Qed.
+  Defined.
 
   Global Program Instance trans_sym_contra_arrow_morphism
     `(PER A R) : Proper (R --> arrow) (R x) | 3.
@@ -339,7 +339,7 @@ Section GenericInstances.
   Next Obligation.
   Proof with auto.
     transitivity x0... symmetry...
-  Qed.
+  Defined.
 
   Global Program Instance per_partial_app_type_morphism
   `(PER A R) : Proper (R ==> iffT) (R x) | 2.
@@ -350,7 +350,7 @@ Section GenericInstances.
     intros.
     transitivity y...
     symmetry...
-  Qed.
+  Defined.
 
   (** Every Transitive crelation induces a morphism by "pushing" an [R x y] on the left of an [R x z] proof to get an [R y z] goal. *)
 
@@ -361,7 +361,7 @@ Section GenericInstances.
   Next Obligation.
   Proof with auto.
     transitivity y...
-  Qed.
+  Defined.
 
   (** Every Symmetric and Transitive crelation gives rise to an equivariant morphism. *)
 
@@ -374,10 +374,10 @@ Section GenericInstances.
     transitivity x0... transitivity x... symmetry...
 
     transitivity y... transitivity y0... symmetry...
-  Qed.
+  Defined.
 
   Lemma symmetric_equiv_flip `(Symmetric A R) : relation_equivalence R (flip R).
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
 
   Global Program Instance compose_proper A B C RA RB RC :
     Proper ((RB ==> RC) ==> (RA ==> RB) ==> (RA ==> RC)) (@compose A B C).
@@ -386,14 +386,14 @@ Section GenericInstances.
   Proof.
     simpl_crelation.
     unfold compose. firstorder. 
-  Qed.
+  Defined.
 
   (** Coq functions are morphisms for Leibniz equality,
      applied only if really needed. *)
 
   Global Instance reflexive_eq_dom_reflexive `(Reflexive B R') :
     Reflexive (@Logic.eq A ==> R').
-  Proof. simpl_crelation. Qed.
+  Proof. simpl_crelation. Defined.
 
   (** [respectful] is a morphism for crelation equivalence . *)
 
@@ -406,13 +406,13 @@ Section GenericInstances.
     split ; intros H x y Hxy.
     apply (fst (HSS' _ _)). apply H. now apply (snd (HRR' _ _)). 
     apply (snd (HSS' _ _)). apply H. now apply (fst (HRR' _ _)). 
-  Qed.
+  Defined.
 
   (** [R] is Reflexive, hence we can build the needed proof. *)
 
   Lemma Reflexive_partial_app_morphism `(Proper (A -> B) (R ==> R') m, ProperProxy A R x) :
     Proper R' (m x).
-  Proof. simpl_crelation. Qed.
+  Proof. simpl_crelation. Defined.
   
   Class Params {A} (of : A) (arity : nat).
     
@@ -422,22 +422,22 @@ Section GenericInstances.
     intros.
     unfold flip, respectful.
     split ; intros ; intuition.
-  Qed.
+  Defined.
 
   
   (** Treating flip: can't make them direct instances as we
    need at least a [flip] present in the goal. *)
   
   Lemma flip1 `(subrelation A R' R) : subrelation (flip (flip R')) R.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
   
   Lemma flip2 `(subrelation A R R') : subrelation R (flip (flip R')).
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
   
   (** That's if and only if *)
   
   Lemma eq_subrelation `(Reflexive A R) : subrelation (@eq A) R.
-  Proof. simpl_crelation. Qed.
+  Proof. simpl_crelation. Defined.
 
   (** Once we have normalized, we will apply this instance to simplify the problem. *)
   
@@ -447,10 +447,10 @@ Section GenericInstances.
   only for immediately solving goals without variables. *)
   
   Lemma reflexive_proper `{Reflexive A R} (x : A) : Proper R x.
-  Proof. firstorder. Qed.
+  Proof. firstorder. Defined.
   
   Lemma proper_eq {A} (x : A) : Proper (@eq A) x.
-  Proof. intros. apply reflexive_proper. Qed.
+  Proof. intros. apply reflexive_proper. Defined.
   
 End GenericInstances.
 
@@ -509,7 +509,7 @@ Proof.
   split ; red ; intros. 
   now apply (fst (HRR' _ _)). 
   now apply (snd (HRR' _ _)).
-Qed.
+Defined.
 
 Ltac proper_reflexive :=
   match goal with
@@ -548,12 +548,12 @@ Section Normalize.
     red in H, H0. red in H.
     apply (snd (H _ _)). 
     assumption.
-  Qed.
+  Defined.
 
   Lemma flip_atom R : Normalizes R (flip (flip R)).
   Proof.
     firstorder.
-  Qed.
+  Defined.
 
 End Normalize.
 
@@ -562,7 +562,7 @@ Lemma flip_arrow `(NA : Normalizes A R (flip R'''), NB : Normalizes B R' (flip R
 Proof. 
   unfold Normalizes in *. intros.
   rewrite NA, NB. firstorder. 
-Qed.
+Defined.
 
 Ltac normalizes :=
   match goal with
@@ -591,7 +591,7 @@ Lemma proper_sym_flip :
 Proof.
 intros A R1 Sym B R2 f Hf.
 intros x x' Hxx'. apply Hf, Sym, Hxx'.
-Qed.
+Defined.
 
 Lemma proper_sym_flip_2 :
  forall `(Symmetric A R1)`(Symmetric B R2)`(Proper (A->B->C) (R1==>R2==>R3) f),
@@ -599,7 +599,7 @@ Lemma proper_sym_flip_2 :
 Proof.
 intros A R1 Sym1 B R2 Sym2 C R3 f Hf.
 intros x x' Hxx' y y' Hyy'. apply Hf; auto.
-Qed.
+Defined.
 
 (** When the crelation on the domain is symmetric, a predicate is
   compatible with [iff] as soon as it is compatible with [impl].
@@ -609,13 +609,13 @@ Lemma proper_sym_impl_iff : forall `(Symmetric A R)`(Proper _ (R==>impl) f),
  Proper (R==>iff) f.
 Proof.
 intros A R Sym f Hf x x' Hxx'. repeat red in Hf. split; eauto.
-Qed.
+Defined.
 
 Lemma proper_sym_arrow_iffT : forall `(Symmetric A R)`(Proper _ (R==>arrow) f),
  Proper (R==>iffT) f.
 Proof.
 intros A R Sym f Hf x x' Hxx'. repeat red in Hf. split; eauto.
-Qed.
+Defined.
 
 Lemma proper_sym_impl_iff_2 :
  forall `(Symmetric A R)`(Symmetric B R')`(Proper _ (R==>R'==>impl) f),
@@ -623,7 +623,7 @@ Lemma proper_sym_impl_iff_2 :
 Proof.
 intros A R Sym B R' Sym' f Hf x x' Hxx' y y' Hyy'.
 repeat red in Hf. split; eauto.
-Qed.
+Defined.
 
 Lemma proper_sym_arrow_iffT_2 :
  forall `(Symmetric A R)`(Symmetric B R')`(Proper _ (R==>R'==>arrow) f),
@@ -631,7 +631,7 @@ Lemma proper_sym_arrow_iffT_2 :
 Proof.
 intros A R Sym B R' Sym' f Hf x x' Hxx' y y' Hyy'.
 repeat red in Hf. split; eauto.
-Qed.
+Defined.
 
 (** A [PartialOrder] is compatible with its underlying equivalence. *)
 Require Import Relation_Definitions.
@@ -646,7 +646,7 @@ transitivity x.
 generalize (partial_order_equivalence x x'); compute; intuition.
 transitivity y; auto.
 generalize (partial_order_equivalence y y'); compute; intuition.
-Qed.
+Defined.
 
 (** From a [PartialOrder] to the corresponding [StrictOrder]:
      [lt = le /\ ~eq].
@@ -663,7 +663,7 @@ intro Hxz.
 apply Hxy'.
 apply partial_order_antisym; auto.
 rewrite Hxz. auto.
-Qed.
+Defined.
 
 (** From a [StrictOrder] to the corresponding [PartialOrder]:
      [le = lt \/ eq].
@@ -680,7 +680,7 @@ left. transitivity y; auto.
 left. rewrite <- Hyz; auto.
 left. rewrite Hxy; auto.
 right. transitivity y; auto.
-Qed.
+Defined.
 
 Hint Extern 4 (PreOrder (relation_disjunction _ _)) => 
   class_apply StrictOrder_PreOrder : typeclass_instances.
@@ -692,7 +692,7 @@ Proof.
 intros. intros x y. compute. intuition.
 elim (StrictOrder_Irreflexive x).
 transitivity y; auto.
-Qed.
+Defined.
 
 Hint Extern 4 (StrictOrder (relation_conjunction _ _)) => 
   class_apply PartialOrder_StrictOrder : typeclass_instances.
